@@ -1,8 +1,7 @@
 ﻿package extension.facebookads;
-#if android
-import openfl.utils.JNI;
-#end
-import openfl.Lib;
+
+import nme.JNI;
+import nme.Lib;
 
 class FacebookAds {
 
