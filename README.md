@@ -15,7 +15,7 @@ FacebookAds.init("PlacementID");
 #end
 
   FacebookAds.showRewarded(function(){
-      trace("CB VIDEO SUCCEFULL");
+      trace("CB VIDEO SUCCESSFUL");
     },
     function() {
       trace("CB VIDEO SKIPPED");
