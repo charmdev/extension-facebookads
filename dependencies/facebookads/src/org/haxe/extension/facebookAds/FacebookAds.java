@@ -73,7 +73,6 @@ public class FacebookAds extends Extension
 
 						if (giveReward)
 						{
-							giveReward = false;
 							_callback.call("onRewardedCompleted", new Object[] {});
 
 							Log.d(TAG, "Rewarded video CB onRewardedCompleted!");
@@ -82,11 +81,17 @@ public class FacebookAds extends Extension
 
 					@Override
 					public void onRewardedVideoActivityDestroyed() {
-						giveReward = false;
 
+						if (!giveReward)
+						{
+							_callback.call("onVideoSkipped", new Object[] {});
+						}
+						else
+						{
+							giveReward = false;
+						}
+						
 						Log.d(TAG, "Rewarded video ad Destroyed!");
-
-						_callback.call("onVideoSkipped", new Object[] {});
 					}
 					
 				});
