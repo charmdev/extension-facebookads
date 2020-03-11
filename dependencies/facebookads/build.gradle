@@ -1,0 +1,34 @@
+buildscript {
+	repositories {
+		maven {
+			url "https://repo1.maven.org/maven2/"
+		}
+	}
+	dependencies {
+		classpath 'com.android.tools.build:gradle:2.1.0'
+	}
+}
+
+apply plugin: 'com.android.library'
+
+android {
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src']
+			res.srcDirs = ['res']
+		}
+	}
+	compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+	buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+}
+
+dependencies {
+	
+	compile project(':deps:extension-api')
+	compile 'com.android.support:support-v4:::SET_SUPPORT_LIBRARY_VERSION::'
+
+	implementation 'com.android.support:support-annotations:28.0.0'
+	implementation 'com.facebook.android:audience-network-sdk:5.7.1'
+	
+}

@@ -1,0 +1,13 @@
+{
+	"name": "extension-facebookads",
+	"url": "https://github.com/charmdev/extension-facebookads",
+	"license": "MIT",
+	"tags": ["openfl", "ads", "android", "iOS"],
+	"description": "Facebook Audience Network (ads) extension for Lime/OpenFL (Android + iOS).",
+	"version": "2.0.0",
+	"dependencies": {
+		"extension-android-support-v4": ""
+	},
+	"contributors": ["charmdev"],
+	"releasenote": "Add warning if you forgot to set google play services version."
+}
