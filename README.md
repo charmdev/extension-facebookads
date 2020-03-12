@@ -1,5 +1,8 @@
 ## extension-facebookads
 
+```xml
+<haxelib name="extension-facebookads" />
+```
 import extension.facebookads.FacebookAds;
 
 //FacebookAds.enableTestingAds();
@@ -21,6 +24,7 @@ FacebookAds.init("PlacementID");
       trace("CB VIDEO SKIPPED");
     }
   );
+
 
 ## Main Features
 
