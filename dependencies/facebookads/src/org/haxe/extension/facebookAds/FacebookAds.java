@@ -92,6 +92,8 @@ public class FacebookAds extends Extension
 						{
 							giveReward = false;
 						}
+
+						rewardedVideoAd.loadAd();
 						
 						Log.d(TAG, "Rewarded video ad Destroyed!");
 					}
@@ -108,6 +110,7 @@ public class FacebookAds extends Extension
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				if (rewardedLoadedFlag) {
+					rewardedLoadedFlag = false;
 					rewardedVideoAd.show();
 				}
 			}
