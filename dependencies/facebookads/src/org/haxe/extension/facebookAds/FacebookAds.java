@@ -46,6 +46,8 @@ public class FacebookAds extends Extension
 						Log.d(TAG, "Rewarded video ad is loaded and ready to be displayed!");
 						rewardedLoadedFlag = true;
 						giveReward = false;
+
+						_callback.call("onRewardedCanShow", new Object[] {});
 					}
 
 					@Override

@@ -10,10 +10,11 @@ class FacebookAds {
 	#end
 
 	private static var initialized:Bool = false;
-	private static var testingAds:Bool=false;
+	private static var testingAds:Bool = false;
 	public static var __showRewarded:Void->Void = function() {}
 	private static var completeCB;
 	private static var skipCB;
+	private static var canshow:Bool = false;
 
 	public static function enableTestingAds() {
 		if ( testingAds ) return;
@@ -55,9 +56,15 @@ class FacebookAds {
 		#end
 	}
 
+	public static function canShowAds():Bool {
+		return canshow;
+	}
+
 	public static function showRewarded(cb, skip) {
 		
-		trace("haxe try... showRewarded");
+		canshow = false;
+
+		trace("try... showRewarded fb");
 
 		completeCB = cb;
 		skipCB = skip;
@@ -74,7 +81,12 @@ class FacebookAds {
 	{
 		var event:String = Std.string(Reflect.field(inEvent, "type"));
 
-		if (event == "rewardedcompleted")
+		if (event == "rewardedcanshow")
+		{
+			canshow = true;
+			trace("REWARDED CAN SHOW");
+		}
+		else  if (event == "rewardedcompleted")
 		{
 			trace("REWARDED COMPLETED");
 			if (completeCB != null) completeCB();
@@ -89,6 +101,13 @@ class FacebookAds {
 	#elseif android
 
 	private function new() {}
+
+	public function onRewardedCanShow()
+	{
+		canshow = true;
+		trace("REWARDED CAN SHOW");
+		
+	}
 
 	public function onRewardedCompleted()
 	{
