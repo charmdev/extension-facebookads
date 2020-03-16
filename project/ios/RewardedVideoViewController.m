@@ -2,7 +2,12 @@
 #import <FBAudienceNetwork/FBAudienceNetwork.h>
 
 @interface RewardedVideoViewController () <FBRewardedVideoAdDelegate>
+
 @property (nonatomic, strong) FBRewardedVideoAd *rewardedVideoAd;
+
+@property (assign) BOOL giveReward;
+@property (assign) NSString *adId;
+
 @end
 
 @implementation RewardedVideoViewController
@@ -13,7 +18,18 @@ extern "C" void sendAdsEvent(char* event);
 {
     NSLog(@"Rewarded video LoadAd id %@", rewardedid);
 
+    self.adId = rewardedid;
+
     self.rewardedVideoAd = [[FBRewardedVideoAd alloc] initWithPlacementID:rewardedid];
+    self.rewardedVideoAd.delegate = self;
+    [self.rewardedVideoAd loadAd];
+}
+
+- (void)reloadAd
+{
+    NSLog(@"Rewarded video reLoadAd id %@", self.adId);
+
+    self.rewardedVideoAd = [[FBRewardedVideoAd alloc] initWithPlacementID:self.adId];
     self.rewardedVideoAd.delegate = self;
     [self.rewardedVideoAd loadAd];
 }
@@ -36,24 +52,44 @@ extern "C" void sendAdsEvent(char* event);
 
 - (void)rewardedVideoAdDidLoad:(FBRewardedVideoAd *)rewardedVideoAd
 {
+    sendAdsEvent("rewardedcanshow");
+
+    self.giveReward = false;
+
     NSLog(@"Rewarded video ad was loaded. Can present now.");
 }
 
-- (void)rewardedVideoAd:(FBRewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error
-{
-    NSLog(@"Rewarded video failed to load with error: %@", error.description);
-}
 
-- (void)rewardedVideoAdDidClick:(FBRewardedVideoAd *)rewardedVideoAd
-{
-    NSLog(@"Rewarded video was clicked.");
-}
 
 - (void)rewardedVideoAdDidClose:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    sendAdsEvent("rewardedcompleted");
+    if (self.giveReward)
+    {
+       sendAdsEvent("rewardedcompleted");
+    }
+    else
+    {
+        sendAdsEvent("rewardedskip");
+    }
 
     NSLog(@"Rewarded video closed.");
+}
+
+- (void)rewardedVideoAdVideoComplete:(FBRewardedVideoAd *)rewardedVideoAd
+{
+    self.giveReward = true;
+    NSLog(@"Rewarded video was completed successfully.");
+}
+
+
+
+
+
+- (void)rewardedVideoAd:(FBRewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error
+{
+    self.giveReward = false;
+
+    NSLog(@"Rewarded video failed to load with error: %@", error.description);
 }
 
 - (void)rewardedVideoAdWillClose:(FBRewardedVideoAd *)rewardedVideoAd
@@ -66,10 +102,9 @@ extern "C" void sendAdsEvent(char* event);
     NSLog(@"Rewarded video impression is being captured.");
 }
 
-- (void)rewardedVideoAdVideoComplete:(FBRewardedVideoAd *)rewardedVideoAd
+- (void)rewardedVideoAdDidClick:(FBRewardedVideoAd *)rewardedVideoAd
 {
-    NSLog(@"Rewarded video was completed successfully.");
+    NSLog(@"Rewarded video was clicked.");
 }
-
 
 @end

@@ -7,6 +7,7 @@ class FacebookAds {
 
 	#if ios
 	private static var __ads_set_event_handle = Lib.load("facebookadsex","ads_set_event_handle", 1);
+	public static var __reloadRewarded:Void->Void = function() {}
 	#end
 
 	private static var initialized:Bool = false;
@@ -44,9 +45,9 @@ class FacebookAds {
 			}
 		#elseif ios
 			try{
-				// CPP METHOD LINKING
 				var __init:String->Bool->Void = cpp.Lib.load("facebookAdsEx","facebookadsex_init",2);
 				__showRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_show_rewarded",0);
+				__reloadRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_reload_rewarded",0);
 				__init(rewardedID,testingAds);
 
 				__ads_set_event_handle(notifyListeners);
@@ -57,6 +58,9 @@ class FacebookAds {
 	}
 
 	public static function canShowAds():Bool {
+		#if ios
+		if (!canshow) __reloadRewarded();
+		#end
 		return canshow;
 	}
 
@@ -90,11 +94,15 @@ class FacebookAds {
 		{
 			trace("REWARDED COMPLETED");
 			if (completeCB != null) completeCB();
+
+			__reloadRewarded();
 		}
 		else if (event == "rewardedskipped")
 		{
 			trace("VIDEO IS SKIPPED");
 			if (skipCB != null) skipCB();
+
+			__reloadRewarded();
 			
 		}
 	}
@@ -106,7 +114,6 @@ class FacebookAds {
 	{
 		canshow = true;
 		trace("REWARDED CAN SHOW");
-		
 	}
 
 	public function onRewardedCompleted()
@@ -121,5 +128,4 @@ class FacebookAds {
 	}
 	
 	#end
-
 }

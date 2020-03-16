@@ -5,7 +5,7 @@ namespace facebookadsex {
 	
 	static RewardedVideoViewController *rewardedVideoAd;
 
-	void init(const char *__RewardedID, bool testingAds){
+	void init(const char *__RewardedID, bool testingAds) {
 		
 		NSString *rewardedID = [NSString stringWithUTF8String:__RewardedID];
 
@@ -16,6 +16,10 @@ namespace facebookadsex {
 
 		rewardedVideoAd = [RewardedVideoViewController alloc];
 		[rewardedVideoAd loadAd:rewardedID];
+	}
+
+	void reloadRewarded(){
+		[rewardedVideoAd reloadAd];
 	}
 
 	void showRewarded(){

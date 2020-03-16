@@ -3,6 +3,7 @@
 
 namespace facebookadsex {
 	void init(const char *RewardedID, bool testingAds);
+	void reloadRewarded();
 	void showRewarded();
 }
 

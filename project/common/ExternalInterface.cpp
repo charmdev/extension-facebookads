@@ -28,6 +28,12 @@ static value facebookadsex_init(value rewarded_id, value testing_ads){
 }
 DEFINE_PRIM(facebookadsex_init,2);
 
+static value facebookadsex_reload_rewarded(){
+	reloadRewarded();
+	return alloc_null();
+}
+DEFINE_PRIM(facebookadsex_reload_rewarded,0);
+
 static value facebookadsex_show_rewarded(){
 	showRewarded();
 	return alloc_null();
