@@ -16,6 +16,7 @@ class FacebookAds {
 	private static var completeCB;
 	private static var skipCB;
 	private static var canshow:Bool = false;
+	public static var onRewardedEvent:String->Void = null;
 
 	public static function enableTestingAds() {
 		if ( testingAds ) return;
@@ -93,6 +94,7 @@ class FacebookAds {
 		else  if (event == "rewardedcompleted")
 		{
 			trace("REWARDED COMPLETED");
+			dispatchEventIfPossible("CLOSED");
 			if (completeCB != null) completeCB();
 
 			__reloadRewarded();
@@ -100,6 +102,7 @@ class FacebookAds {
 		else if (event == "rewardedskipped")
 		{
 			trace("VIDEO IS SKIPPED");
+			dispatchEventIfPossible("CLOSED");
 			if (skipCB != null) skipCB();
 
 			__reloadRewarded();
@@ -119,13 +122,27 @@ class FacebookAds {
 	public function onRewardedCompleted()
 	{
 		trace("REWARDED COMPLETED");
+		dispatchEventIfPossible("CLOSED");
 		if (completeCB != null) completeCB();
 	}
 	public function onVideoSkipped()
 	{
 		trace("VIDEO IS SKIPPED");
+		dispatchEventIfPossible("CLOSED");
 		if (skipCB != null) skipCB();
 	}
 	
 	#end
+
+	private function dispatchEventIfPossible(e:String):Void
+	{
+		if (onRewardedEvent != null)
+		{
+			onRewardedEvent(e);
+		}
+		else
+		{
+			trace('no event handler');
+		}
+	}
 }
