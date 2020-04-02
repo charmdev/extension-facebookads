@@ -4,10 +4,11 @@
 namespace facebookadsex {
 	
 	static RewardedVideoViewController *rewardedVideoAd;
+	static NSString *rewardedID;
 
 	void init(const char *__RewardedID, bool testingAds) {
 		
-		NSString *rewardedID = [NSString stringWithUTF8String:__RewardedID];
+		rewardedID = [NSString stringWithUTF8String:__RewardedID];
 
 		if (testingAds) {
 			NSString *testDeviceKey = [FBAdSettings testDeviceHash];
@@ -19,7 +20,7 @@ namespace facebookadsex {
 	}
 
 	void reloadRewarded(){
-		[rewardedVideoAd reloadAd];
+		[rewardedVideoAd reloadAd:rewardedID];
 	}
 
 	void showRewarded(){

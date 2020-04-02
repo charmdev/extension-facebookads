@@ -6,7 +6,6 @@
 @property (nonatomic, strong) FBRewardedVideoAd *rewardedVideoAd;
 
 @property (assign) BOOL giveReward;
-@property (assign) NSString *adId;
 
 @end
 
@@ -14,27 +13,27 @@
 
 extern "C" void sendAdsEvent(char* event);
 
-- (IBAction)loadAd:(NSString *)rewardedid
+- (void)loadAd:(NSString *)rewardedid
 {
     NSLog(@"Rewarded video LoadAd id %@", rewardedid);
-
-    self.adId = rewardedid;
 
     self.rewardedVideoAd = [[FBRewardedVideoAd alloc] initWithPlacementID:rewardedid];
     self.rewardedVideoAd.delegate = self;
     [self.rewardedVideoAd loadAd];
 }
 
-- (void)reloadAd
+- (void)reloadAd:(NSString *)rewardedid
 {
-    NSLog(@"Rewarded video reLoadAd id %@", self.adId);
+    NSLog(@"Rewarded video RELOAD id %@", rewardedid);
 
-    self.rewardedVideoAd = [[FBRewardedVideoAd alloc] initWithPlacementID:self.adId];
+    [self.rewardedVideoAd release];
+
+    self.rewardedVideoAd = [[FBRewardedVideoAd alloc] initWithPlacementID:rewardedid];
     self.rewardedVideoAd.delegate = self;
     [self.rewardedVideoAd loadAd];
 }
 
-- (IBAction)showAd
+- (void)showAd
 {
     if (!self.rewardedVideoAd || !self.rewardedVideoAd.isAdValid)
     {

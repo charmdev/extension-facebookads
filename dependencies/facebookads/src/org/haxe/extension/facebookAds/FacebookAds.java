@@ -5,6 +5,8 @@ import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 import com.facebook.ads.*;
 
+import android.opengl.GLSurfaceView;
+
 public class FacebookAds extends Extension
 {
 	protected static FacebookAds instance = null;
@@ -30,7 +32,9 @@ public class FacebookAds extends Extension
 		
 		FacebookAds.rewardedID = rewardedVideoID;
 
-		Extension.mainActivity.runOnUiThread(new Runnable() {
+		if (Extension.mainView == null) return;
+		GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+		view.queueEvent(new Runnable() {
 			public void run() {
 
 				rewardedVideoAd = new RewardedVideoAd(Extension.mainActivity.getApplicationContext(), FacebookAds.rewardedID);
