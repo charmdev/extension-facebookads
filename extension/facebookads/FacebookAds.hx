@@ -134,7 +134,7 @@ class FacebookAds {
 	
 	#end
 
-	private function dispatchEventIfPossible(e:String):Void
+	private static function dispatchEventIfPossible(e:String):Void
 	{
 		if (onRewardedEvent != null)
 		{
