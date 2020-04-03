@@ -32,9 +32,7 @@ public class FacebookAds extends Extension
 		
 		FacebookAds.rewardedID = rewardedVideoID;
 
-		if (Extension.mainView == null) return;
-		GLSurfaceView view = (GLSurfaceView) Extension.mainView;
-		view.queueEvent(new Runnable() {
+		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 
 				rewardedVideoAd = new RewardedVideoAd(Extension.mainActivity.getApplicationContext(), FacebookAds.rewardedID);
@@ -51,7 +49,14 @@ public class FacebookAds extends Extension
 						rewardedLoadedFlag = true;
 						giveReward = false;
 
-						_callback.call("onRewardedCanShow", new Object[] {});
+						if (Extension.mainView == null) return;
+						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+						view.queueEvent(new Runnable() {
+							public void run() {
+
+								_callback.call("onRewardedCanShow", new Object[] {});
+
+						}});
 					}
 
 					@Override
@@ -79,7 +84,14 @@ public class FacebookAds extends Extension
 
 						if (giveReward)
 						{
-							_callback.call("onRewardedCompleted", new Object[] {});
+							if (Extension.mainView == null) return;
+							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+							view.queueEvent(new Runnable() {
+								public void run() {
+									
+									_callback.call("onRewardedCompleted", new Object[] {});
+
+							}});
 
 							Log.d(TAG, "Rewarded video CB onRewardedCompleted!");
 						}
@@ -90,7 +102,14 @@ public class FacebookAds extends Extension
 
 						if (!giveReward)
 						{
-							_callback.call("onVideoSkipped", new Object[] {});
+							if (Extension.mainView == null) return;
+							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+							view.queueEvent(new Runnable() {
+								public void run() {
+
+									_callback.call("onVideoSkipped", new Object[] {});
+
+							}});
 						}
 						else
 						{
