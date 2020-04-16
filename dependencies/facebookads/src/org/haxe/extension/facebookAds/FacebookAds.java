@@ -100,21 +100,16 @@ public class FacebookAds extends Extension
 					@Override
 					public void onRewardedVideoActivityDestroyed() {
 
-						if (!giveReward)
-						{
-							if (Extension.mainView == null) return;
-							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
-							view.queueEvent(new Runnable() {
-								public void run() {
+						if (Extension.mainView == null) return;
+						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+						view.queueEvent(new Runnable() {
+							public void run() {
 
-									_callback.call("onVideoSkipped", new Object[] {});
+								_callback.call("onVideoSkipped", new Object[] {});
 
-							}});
-						}
-						else
-						{
-							giveReward = false;
-						}
+						}});
+
+						giveReward = false;
 
 						rewardedVideoAd.loadAd();
 						

@@ -13,8 +13,8 @@ class FacebookAds {
 	private static var initialized:Bool = false;
 	private static var testingAds:Bool = false;
 	public static var __showRewarded:Void->Void = function() {}
-	private static var completeCB;
-	private static var skipCB;
+	private static var completeCB:Void->Void;
+	private static var skipCB:Void->Void;
 	private static var canshow:Bool = false;
 	public static var onRewardedEvent:String->Void = null;
 

@@ -58,8 +58,6 @@ extern "C" void sendAdsEvent(char* event);
     NSLog(@"Rewarded video ad was loaded. Can present now.");
 }
 
-
-
 - (void)rewardedVideoAdDidClose:(FBRewardedVideoAd *)rewardedVideoAd
 {
     if (self.giveReward)
@@ -79,10 +77,6 @@ extern "C" void sendAdsEvent(char* event);
     self.giveReward = true;
     NSLog(@"Rewarded video was completed successfully.");
 }
-
-
-
-
 
 - (void)rewardedVideoAd:(FBRewardedVideoAd *)rewardedVideoAd didFailWithError:(NSError *)error
 {
