@@ -98,21 +98,29 @@ public class FacebookAds extends Extension
 
 						if (giveReward == false)
 						{
-						if (Extension.mainView == null) return;
-						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
-						view.queueEvent(new Runnable() {
-							public void run() {
+							if (Extension.mainView == null) return;
+							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+							view.queueEvent(new Runnable() {
+								public void run() {
+									_callback.call("onVideoSkipped", new Object[] {});
+							}});
 
-								_callback.call("onVideoSkipped", new Object[] {});
+							Log.d(TAG, "Rewarded video ad Destroyed! !giveReward");
+						}
+						else
+						{
+							if (Extension.mainView == null) return;
+							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+							view.queueEvent(new Runnable() {
+								public void run() {
+									_callback.call("onRewardedCompleted", new Object[] {});
+							}});
 
-						}});
-
+							Log.d(TAG, "Rewarded video ad Destroyed! giveReward");
 						}
 						giveReward = false;
-
 						rewardedVideoAd.loadAd();
-						
-						Log.d(TAG, "Rewarded video ad Destroyed!");
+						Log.d(TAG, "Rewarded video ad Destroyed! load ad" );
 					}
 					
 				});
