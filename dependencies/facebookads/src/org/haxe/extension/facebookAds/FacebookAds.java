@@ -24,6 +24,7 @@ public class FacebookAds extends Extension
 	protected static boolean rewardedLoadedFlag = false;
 	protected static RewardedVideoAd rewardedVideoAd;
 	protected static boolean giveReward = false;
+	protected static boolean rewardSended = false;
 
 	public static void init(boolean testingAds, HaxeObject callback, String rewardedVideoID) {
 		
@@ -41,6 +42,7 @@ public class FacebookAds extends Extension
 					public void onError(Ad ad, AdError error) {
 						Log.e(TAG, "Rewarded video ad failed to load: " + error.getErrorMessage());
 						giveReward = false;
+						rewardSended = false;
 					}
 
 					@Override
@@ -48,6 +50,7 @@ public class FacebookAds extends Extension
 						Log.d(TAG, "Rewarded video ad is loaded and ready to be displayed!");
 						rewardedLoadedFlag = true;
 						giveReward = false;
+						rewardSended = false;
 
 						if (Extension.mainView == null) return;
 						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
@@ -72,6 +75,7 @@ public class FacebookAds extends Extension
 						Log.d(TAG, "Rewarded video completed!");
 						
 						giveReward = true;
+						rewardSended = false;
 					}
 
 					@Override
@@ -80,9 +84,10 @@ public class FacebookAds extends Extension
 						// by closing the app, or closing the end card.
 						Log.d(TAG, "Rewarded video ad closed!");
 
-						if (giveReward)
+						if (giveReward && !rewardSended)
 						{
 							if (Extension.mainView == null) return;
+							rewardSended = true;
 							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
 							view.queueEvent(new Runnable() {
 								public void run() {
@@ -95,19 +100,8 @@ public class FacebookAds extends Extension
 
 					@Override
 					public void onRewardedVideoActivityDestroyed() {
-
-						if (giveReward == false)
-						{
-							if (Extension.mainView == null) return;
-							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
-							view.queueEvent(new Runnable() {
-								public void run() {
-									_callback.call("onVideoSkipped", new Object[] {});
-							}});
-
-							Log.d(TAG, "Rewarded video ad Destroyed! !giveReward");
-						}
-						else
+						
+						if (giveReward && !rewardSended)
 						{
 							if (Extension.mainView == null) return;
 							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
@@ -118,7 +112,20 @@ public class FacebookAds extends Extension
 
 							Log.d(TAG, "Rewarded video ad Destroyed! giveReward");
 						}
+						else if (!giveReward && !rewardSended)
+						{
+							if (Extension.mainView == null) return;
+							GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+							view.queueEvent(new Runnable() {
+								public void run() {
+									_callback.call("onVideoSkipped", new Object[] {});
+							}});
+
+							Log.d(TAG, "Rewarded video ad Destroyed! !giveReward");
+						}
+
 						giveReward = false;
+						rewardSended = false;
 						rewardedVideoAd.loadAd();
 						Log.d(TAG, "Rewarded video ad Destroyed! load ad" );
 					}
