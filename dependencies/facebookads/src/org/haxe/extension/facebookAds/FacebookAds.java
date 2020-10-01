@@ -9,13 +9,6 @@ import android.opengl.GLSurfaceView;
 
 public class FacebookAds extends Extension
 {
-	protected static FacebookAds instance = null;
-	
-	protected static FacebookAds getInstance() {
-		if (instance == null) instance = new FacebookAds();
-		return instance;
-	}
-
 	protected FacebookAds () { }
 
 	protected static HaxeObject _callback = null;
@@ -80,8 +73,6 @@ public class FacebookAds extends Extension
 
 					@Override
 					public void onRewardedVideoClosed() {
-						// The Rewarded Video ad was closed - this can occur during the video
-						// by closing the app, or closing the end card.
 						Log.d(TAG, "Rewarded video ad closed!");
 
 						if (giveReward && !rewardSended)

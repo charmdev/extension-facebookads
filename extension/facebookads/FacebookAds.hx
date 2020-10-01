@@ -18,6 +18,10 @@ class FacebookAds {
 	private static var canshow:Bool = false;
 	public static var onRewardedEvent:String->Void = null;
 
+#if android
+	private static var instance:FacebookAds = new FacebookAds();
+#end
+
 	public static function enableTestingAds() {
 		if ( testingAds ) return;
 		if ( initialized ) {
@@ -39,7 +43,8 @@ class FacebookAds {
 				var __init:Bool->FacebookAds->String->Void =
 				JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "init", "(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;)V");
 				__showRewarded = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showRewarded", "()V");
-				__init(testingAds, new FacebookAds(), rewardedID);
+
+				__init(testingAds, instance, rewardedID);
 
 			} catch(e:Dynamic) {
 				trace("Error: "+e);
