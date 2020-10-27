@@ -5,10 +5,10 @@ import nme.Lib;
 
 class FacebookAds {
 
-	#if ios
-	private static var __ads_set_event_handle = Lib.load("facebookadsex","ads_set_event_handle", 1);
+#if ios
+	private static var __fbads_set_event_handle = Lib.load("facebookadsex","fbads_set_event_handle", 1);
 	public static var __reloadRewarded:Void->Void = function() {}
-	#end
+#end
 
 	private static var initialized:Bool = false;
 	private static var testingAds:Bool = false;
@@ -38,7 +38,7 @@ class FacebookAds {
 	public static function init(rewardedID:String) {
 		if(initialized) return;
 		initialized = true;
-		#if android
+#if android
 			try {
 				var __init:Bool->FacebookAds->String->Void =
 				JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "init", "(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;)V");
@@ -49,24 +49,24 @@ class FacebookAds {
 			} catch(e:Dynamic) {
 				trace("Error: "+e);
 			}
-		#elseif ios
+#elseif ios
 			try{
 				var __init:String->Bool->Void = cpp.Lib.load("facebookAdsEx","facebookadsex_init",2);
 				__showRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_show_rewarded",0);
 				__reloadRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_reload_rewarded",0);
 				__init(rewardedID,testingAds);
 
-				__ads_set_event_handle(notifyListeners);
+				__fbads_set_event_handle(notifyListeners);
 			}catch(e:Dynamic){
 				trace("iOS INIT Exception: "+e);
 			}
-		#end
+#end
 	}
 
 	public static function canShowAds():Bool {
-		#if ios
+#if ios
 		if (!canshow) __reloadRewarded();
-		#end
+#end
 		return canshow;
 	}
 
@@ -86,7 +86,7 @@ class FacebookAds {
 		}
 	}
 
-	#if ios
+#if ios
 	private static function notifyListeners(inEvent:Dynamic)
 	{
 		var event:String = Std.string(Reflect.field(inEvent, "type"));
@@ -114,8 +114,7 @@ class FacebookAds {
 			
 		}
 	}
-	#elseif android
-
+#elseif android
 	private function new() {}
 
 	public function onRewardedCanShow()
@@ -136,8 +135,7 @@ class FacebookAds {
 		dispatchEventIfPossible("CLOSED");
 		if (skipCB != null) skipCB();
 	}
-	
-	#end
+#end
 
 	private static function dispatchEventIfPossible(e:String):Void
 	{

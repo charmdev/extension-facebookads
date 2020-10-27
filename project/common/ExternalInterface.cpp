@@ -16,11 +16,11 @@ AutoGCRoot* adsEventHandle = 0;
 
 #ifdef IPHONE
 
-static void ads_set_event_handle(value onEvent)
+static void fbads_set_event_handle(value onEvent)
 {
     adsEventHandle = new AutoGCRoot(onEvent);
 }
-DEFINE_PRIM(ads_set_event_handle, 1);
+DEFINE_PRIM(fbads_set_event_handle, 1);
 
 static value facebookadsex_init(value rewarded_id, value testing_ads){
 	init(val_string(rewarded_id), val_bool(testing_ads));
@@ -51,9 +51,9 @@ DEFINE_ENTRY_POINT (facebookadsex_main);
 
 extern "C" int facebookadsex_register_prims () { return 0; }
 
-extern "C" void sendAdsEvent(const char* type)
+extern "C" void FBsendAdsEvent(const char* type)
 {
-    printf("Send Event: %s\n", type);
+    printf("FB Send Event: %s\n", type);
     value o = alloc_empty_object();
     alloc_field(o,val_id("type"),alloc_string(type));
     val_call1(adsEventHandle->get(), o);
