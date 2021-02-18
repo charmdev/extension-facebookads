@@ -13,6 +13,8 @@ namespace facebookadsex {
 		if (testingAds) {
 			NSString *testDeviceKey = [FBAdSettings testDeviceHash];
 			[FBAdSettings addTestDevice:testDeviceKey];
+
+			[FBAdSettings setAdvertiserTrackingEnabled:YES];
 		}
 
 		rewardedVideoAd = [RewardedVideoViewController alloc];
