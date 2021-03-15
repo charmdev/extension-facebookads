@@ -16,6 +16,7 @@ public class FacebookAds extends Extension
 	protected static final String TAG = "FacebookAds";
 	protected static boolean rewardedLoadedFlag = false;
 	protected static RewardedVideoAd rewardedVideoAd;
+	protected static RewardedVideoAdExtendedListener rewardedVideoAdListener;
 	protected static boolean giveReward = false;
 	protected static boolean rewardSended = false;
 
@@ -30,7 +31,8 @@ public class FacebookAds extends Extension
 			public void run() {
 
 				rewardedVideoAd = new RewardedVideoAd(Extension.mainActivity.getApplicationContext(), FacebookAds.rewardedID);
-				rewardedVideoAd.setAdListener(new RewardedVideoAdExtendedListener() {
+
+				rewardedVideoAdListener = new RewardedVideoAdExtendedListener() {
 					@Override
 					public void onError(Ad ad, AdError error) {
 						Log.e(TAG, "Rewarded video ad failed to load: " + error.getErrorMessage());
@@ -117,13 +119,18 @@ public class FacebookAds extends Extension
 
 						giveReward = false;
 						rewardSended = false;
-						rewardedVideoAd.loadAd();
+
+						rewardedVideoAd.loadAd(rewardedVideoAd.buildLoadAdConfig()
+						.withAdListener(rewardedVideoAdListener)
+						.build() );
+
 						Log.d(TAG, "Rewarded video ad Destroyed! load ad" );
 					}
-					
-				});
-				rewardedVideoAd.loadAd();
+				};
 
+				rewardedVideoAd.loadAd(rewardedVideoAd.buildLoadAdConfig()
+						.withAdListener(rewardedVideoAdListener)
+						.build() );
 			}
 		});
 	}
