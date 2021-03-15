@@ -11,7 +11,7 @@
 
 @implementation RewardedVideoViewController
 
-extern "C" void FBsendAdsEvent(const char* event);
+extern "C" void FBsendAdsEvent(char* event);
 
 - (void)loadAd:(NSString *)rewardedid
 {
@@ -82,7 +82,7 @@ extern "C" void FBsendAdsEvent(const char* event);
 {
 	self.giveReward = false;
 
-	NSLog(@"Rewarded video failed to load with error %@", error);
+	NSLog(@"Rewarded video failed to load with error");
 }
 
 - (void)rewardedVideoAdWillClose:(FBRewardedVideoAd *)rewardedVideoAd
