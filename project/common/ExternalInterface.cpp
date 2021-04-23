@@ -40,6 +40,11 @@ static value facebookadsex_show_rewarded(){
 }
 DEFINE_PRIM(facebookadsex_show_rewarded,0);
 
+static value facebookadsex_setAdvertiserTrackingEnabled(){
+	setAdvertiserTrackingEnabled();
+	return alloc_null();
+}
+DEFINE_PRIM(facebookadsex_setAdvertiserTrackingEnabled,0);
 
 #endif
 

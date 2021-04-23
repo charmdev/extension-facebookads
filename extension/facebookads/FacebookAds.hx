@@ -8,6 +8,7 @@ class FacebookAds {
 #if ios
 	private static var __fbads_set_event_handle = Lib.load("facebookadsex","fbads_set_event_handle", 1);
 	public static var __reloadRewarded:Void->Void = function() {}
+	public static var __setAdvertiserTrackingEnabled:Void->Void = function() {}
 #end
 
 	private static var initialized:Bool = false;
@@ -53,6 +54,7 @@ class FacebookAds {
 			try{
 				var __init:String->Bool->Void = cpp.Lib.load("facebookAdsEx","facebookadsex_init",2);
 				__showRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_show_rewarded",0);
+				__setAdvertiserTrackingEnabled = cpp.Lib.load("facebookAdsEx","facebookadsex_setAdvertiserTrackingEnabled",0);
 				__reloadRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_reload_rewarded",0);
 				__init(rewardedID,testingAds);
 
@@ -87,6 +89,14 @@ class FacebookAds {
 	}
 
 #if ios
+	public static function setAdvertiserTrackingEnabled() {
+		try {
+			__setAdvertiserTrackingEnabled();
+		} catch(e:Dynamic) {
+			trace("setAdvertiserTrackingEnabled Exception: " + e);
+		}
+	}
+
 	private static function notifyListeners(inEvent:Dynamic)
 	{
 		var event:String = Std.string(Reflect.field(inEvent, "type"));

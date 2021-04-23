@@ -29,4 +29,9 @@ namespace facebookadsex {
 		[rewardedVideoAd showAd];
 	}
 
+	void setAdvertiserTrackingEnabled(){
+		NSLog(@"setAdvertiserTrackingEnabled YES");
+		[FBAdSettings setAdvertiserTrackingEnabled:YES];
+	}
+
 }
