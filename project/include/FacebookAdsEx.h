@@ -6,6 +6,7 @@ namespace facebookadsex {
 	void reloadRewarded();
 	void showRewarded();
 	void setAdvertiserTrackingEnabled();
+	void setAdvertiserTrackingEnabledNO();
 }
 
 #endif

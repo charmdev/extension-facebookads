@@ -9,6 +9,7 @@ class FacebookAds {
 	private static var __fbads_set_event_handle = Lib.load("facebookadsex","fbads_set_event_handle", 1);
 	public static var __reloadRewarded:Void->Void = function() {}
 	public static var __setAdvertiserTrackingEnabled:Void->Void = function() {}
+	public static var __setAdvertiserTrackingEnabledNO:Void->Void = function() {}
 #end
 
 	private static var initialized:Bool = false;
@@ -55,6 +56,7 @@ class FacebookAds {
 				var __init:String->Bool->Void = cpp.Lib.load("facebookAdsEx","facebookadsex_init",2);
 				__showRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_show_rewarded",0);
 				__setAdvertiserTrackingEnabled = cpp.Lib.load("facebookAdsEx","facebookadsex_setAdvertiserTrackingEnabled",0);
+				__setAdvertiserTrackingEnabledNO = cpp.Lib.load("facebookAdsEx","facebookadsex_setAdvertiserTrackingEnabled_no",0);
 				__reloadRewarded = cpp.Lib.load("facebookAdsEx","facebookadsex_reload_rewarded",0);
 				__init(rewardedID,testingAds);
 
@@ -94,6 +96,14 @@ class FacebookAds {
 			__setAdvertiserTrackingEnabled();
 		} catch(e:Dynamic) {
 			trace("setAdvertiserTrackingEnabled Exception: " + e);
+		}
+	}
+
+	public static function setAdvertiserTrackingEnabledNO() {
+		try {
+			__setAdvertiserTrackingEnabledNO();
+		} catch(e:Dynamic) {
+			trace("setAdvertiserTrackingEnabledNO Exception: " + e);
 		}
 	}
 

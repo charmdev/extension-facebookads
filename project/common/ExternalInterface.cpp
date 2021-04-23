@@ -46,6 +46,12 @@ static value facebookadsex_setAdvertiserTrackingEnabled(){
 }
 DEFINE_PRIM(facebookadsex_setAdvertiserTrackingEnabled,0);
 
+static value facebookadsex_setAdvertiserTrackingEnabled_no(){
+	setAdvertiserTrackingEnabledNO();
+	return alloc_null();
+}
+DEFINE_PRIM(facebookadsex_setAdvertiserTrackingEnabled_no,0);
+
 #endif
 
 extern "C" void facebookadsex_main () {	

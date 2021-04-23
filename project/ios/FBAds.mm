@@ -34,4 +34,9 @@ namespace facebookadsex {
 		[FBAdSettings setAdvertiserTrackingEnabled:YES];
 	}
 
+	void setAdvertiserTrackingEnabledNO(){
+		NSLog(@"setAdvertiserTrackingEnabled NO");
+		[FBAdSettings setAdvertiserTrackingEnabled:NO];
+	}
+
 }
