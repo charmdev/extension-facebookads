@@ -93,15 +93,11 @@ extern "C" void FBsendAdsEvent(const char* event);
 - (void)rewardedVideoAdWillLogImpression:(FBRewardedVideoAd *)rewardedVideoAd
 {
 	NSLog(@"Rewarded video impression is being captured.");
-
-	FBsendAdsEvent("rewarded_displaying");
 }
 
 - (void)rewardedVideoAdDidClick:(FBRewardedVideoAd *)rewardedVideoAd
 {
 	NSLog(@"Rewarded video was clicked.");
-
-	FBsendAdsEvent("rewarded_click");
 }
 
 @end

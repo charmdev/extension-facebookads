@@ -17,8 +17,6 @@ class FacebookAds {
 	public static var __showRewarded:Void->Void = function() {}
 	private static var completeCB:Void->Void;
 	private static var skipCB:Void->Void;
-	private static var viewCB:Void->Void;
-	private static var clickCB:Void->Void;
 	private static var canshow:Bool = false;
 	public static var onRewardedEvent:String->Void = null;
 
@@ -76,7 +74,7 @@ class FacebookAds {
 		return canshow;
 	}
 
-	public static function showRewarded(cb, skip, displaying, click) {
+	public static function showRewarded(cb, skip) {
 		
 		canshow = false;
 
@@ -84,8 +82,6 @@ class FacebookAds {
 
 		completeCB = cb;
 		skipCB = skip;
-		viewCB = displaying;
-		clickCB = click;
 
 		try {
 			__showRewarded();
@@ -137,19 +133,6 @@ class FacebookAds {
 			__reloadRewarded();
 			
 		}
-		else if (event == "rewarded_displaying")
-		{
-			trace("VIDEO IS STARTED");
-			dispatchEventIfPossible("DISPLAYING");
-			if (viewCB != null) viewCB();
-		}
-		else if (event == "rewarded_click")
-		{
-			trace("VIDEO IS CLICKED");
-			dispatchEventIfPossible("CLICK");
-			if (clickCB != null) clickCB();
-		}
-
 	}
 #elseif android
 	private function new() {}
@@ -158,20 +141,6 @@ class FacebookAds {
 	{
 		canshow = true;
 		trace("REWARDED CAN SHOW");
-	}
-
-	public function onRewardedDisplaying()
-	{
-		trace("REWARDED Displaying");
-		dispatchEventIfPossible("DISPLAYING");
-		if (viewCB != null) viewCB();
-	}
-
-	public function onRewardedClick()
-	{
-		trace("REWARDED click");
-		dispatchEventIfPossible("CLICK");
-		if (clickCB != null) clickCB();
 	}
 
 	public function onRewardedCompleted()
@@ -186,8 +155,6 @@ class FacebookAds {
 		dispatchEventIfPossible("CLOSED");
 		if (skipCB != null) skipCB();
 	}
-
-
 #end
 
 	private static function dispatchEventIfPossible(e:String):Void
