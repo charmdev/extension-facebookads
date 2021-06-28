@@ -58,11 +58,25 @@ public class FacebookAds extends Extension
 					@Override
 					public void onAdClicked(Ad ad) {
 						Log.d(TAG, "Rewarded video ad clicked!");
+
+						if (Extension.mainView == null) return;
+						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+						view.queueEvent(new Runnable() {
+							public void run() {
+								_callback.call("onRewardedClick", new Object[] {});
+						}});
 					}
 
 					@Override
 					public void onLoggingImpression(Ad ad) {
 						Log.d(TAG, "Rewarded video ad impression logged!");
+
+						if (Extension.mainView == null) return;
+						GLSurfaceView view = (GLSurfaceView) Extension.mainView;
+						view.queueEvent(new Runnable() {
+							public void run() {
+								_callback.call("onRewardedDisplaying", new Object[] {});
+						}});
 					}
 
 					@Override
