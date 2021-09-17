@@ -149,6 +149,15 @@ FB_CLASS_EXPORT
 - (void)adViewWillLogImpression:(FBAdView *)adView;
 
 /**
+ Sent when the dynamic height of an FBAdView is set dynamically.
+
+ @param adView An FBAdView object sending the message.
+ @param dynamicHeight The height that needs to be set dynamically.
+ */
+
+- (void)adView:(FBAdView *)adView setDynamicHeight:(double)dynamicHeight;
+
+/**
   Asks the delegate for a view controller to present modal content, such as the in-app
  browser that can appear when an ad is clicked.
 

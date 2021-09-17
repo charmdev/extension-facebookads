@@ -31,7 +31,7 @@ FB_CLASS_EXPORT
 /**
  FBAdExperienceConfig is class designed to add some configuration to ad experience
  */
-@interface FBAdExperienceConfig : NSObject
+@interface FBAdExperienceConfig : NSObject <NSCopying>
 
 /**
  Ad experience type to set up

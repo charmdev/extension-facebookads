@@ -49,6 +49,12 @@ FB_EXPORT FBAdSize const kFBAdSizeHeight50Banner;
 FB_EXPORT FBAdSize const kFBAdSizeHeight90Banner;
 
 /**
+Represents the flexible dynamic banner ad size, where banner width depends on
+its container width, and banner height is set by the backend.
+*/
+FB_EXPORT FBAdSize const kFBAdDynamicSizeHeightBanner;
+
+/**
   Represents the interstitial ad size.
  */
 FB_EXPORT FBAdSize const kFBAdSizeInterstitial;

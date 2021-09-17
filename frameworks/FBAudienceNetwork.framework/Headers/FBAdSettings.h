@@ -80,7 +80,9 @@ typedef NS_ENUM(NSInteger, FBAdTestAdType) {
     /// carousel ad with square video and link CTA option
     FBAdTestAdType_Carousel_Vid_Square_Link,
     /// sample playable ad with app install CTA
-    FBAdTestAdType_Playable
+    FBAdTestAdType_Playable,
+    /// Redirect to Facebok - Facebook Rewarded Video experience
+    FBAdTestAdType_FBRV
 };
 
 @protocol FBAdLoggingDelegate;

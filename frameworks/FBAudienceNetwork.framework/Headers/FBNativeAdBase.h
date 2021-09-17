@@ -19,8 +19,7 @@
 #import <UIKit/UIKit.h>
 
 #import <FBAudienceNetwork/FBAdExtraHint.h>
-
-#import "FBAdSettings.h"
+#import <FBAudienceNetwork/FBAdSettings.h>
 
 typedef NS_ENUM(NSInteger, FBAdFormatType) {
     FBAdFormatTypeUnknown = 0,
@@ -52,7 +51,7 @@ typedef NS_ENUM(NSInteger, FBNativeAdsCachePolicy) {
 /**
  The Internal representation of an Ad
  */
-@interface FBNativeAdBase : NSObject
+@interface FBNativeAdBase : NSObject <NSCopying>
 /**
  Typed access to the id of the ad placement.
  */
